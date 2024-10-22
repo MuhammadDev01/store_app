@@ -25,67 +25,65 @@ class ProductViewPage extends StatelessWidget {
             ],
           ),
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Image.network(
-                productModel.image,
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    'Name Product:  ${productModel.title}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Price: \$${productModel.price}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Description:  ${productModel.description}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Rating:  ${productModel.rating.rate} ⭐️',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Image.network(
+                  productModel.image,
+                  scale: 3.5,
+                  
+                ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Name Product:  ${productModel.title}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                'Price: \$${productModel.price}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                'Description:  ${productModel.description}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                'Rating:  ${productModel.rating.rate} ⭐️',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
