@@ -17,10 +17,13 @@ class UpdateProductPage extends StatefulWidget {
 class _UpdateProductPageState extends State<UpdateProductPage> {
   String? name, desc, image, price;
   bool isLoading = false;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    List<ProductModel>? product =
-        ModalRoute.of(context)!.settings.arguments as List<ProductModel>?;
+    ProductModel product =
+        ModalRoute.of(context)!.settings.arguments as ProductModel;
     return ModalProgressHUD(
       inAsyncCall: isLoading,
       child: Scaffold(
@@ -39,9 +42,11 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
           child: Column(
             children: [
               const SizedBox(
-                height: 120,
+                height: 80,
               ),
               CustomTextField(
+                controller: nameController,
+                
                 onChanged: (data) {
                   name = data;
                 },
@@ -60,25 +65,17 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
                 },
                 hinttext: 'Product description',
               ),
-              CustomTextField(
-                onChanged: (data) {
-                  image = data;
-                },
-                hinttext: 'Product image',
-              ),
               const SizedBox(
-                height: 100,
+                height: 30,
               ),
               CustomButton(
                 ontap: () async {
                   setState(() {
                     isLoading = true;
                   });
-                                    await updateProduct(product as ProductModel);
+                  await updateProduct(product);
 
-                  try{
-
-                  }catch(e){
+                  try {} catch (e) {
                     debugPrint(e.toString());
                   }
                   debugPrint('success');
@@ -98,10 +95,10 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
   Future<void> updateProduct(ProductModel product) async {
     await UpdateProductService().updateProductService(
       id: product.id,
-      title: name==null?product.title:name!,
-      price: price==null?product.price:price!,
-      desc: desc==null?product.description:desc!,
-      image: image==null?product.image:image!,
+      title: name == null ? product.title : name!,
+      price: price == null ? product.price : price!,
+      desc: desc == null ? product.description : desc!,
+      image: image == null ? product.image : image!,
       category: product.category,
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/models/all_product_model.dart';
+import 'package:store_app/screens/product_view_page.dart';
 import 'package:store_app/screens/update_product_page.dart';
 import 'package:store_app/services/all_product_service.dart';
 import 'package:store_app/widgets/custom_card.dart';
@@ -30,6 +31,7 @@ class HomePage extends StatelessWidget {
           'New Trend',
           style: TextStyle(
             color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -52,8 +54,13 @@ class HomePage extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, UpdateProductPage.id,
-                      arguments: products,
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductViewPage(
+                            productModel: products[index],
+                          ),
+                        ),
                       );
                     },
                     child: CustomCard(product: products[index])),

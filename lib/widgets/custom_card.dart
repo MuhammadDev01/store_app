@@ -1,10 +1,19 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:store_app/models/all_product_model.dart';
 
-class CustomCard extends StatelessWidget {
+class CustomCard extends StatefulWidget {
   const CustomCard({super.key, required this.product});
 
   final ProductModel product;
+
+  @override
+  State<CustomCard> createState() => _CustomCardState();
+}
+
+class _CustomCardState extends State<CustomCard> {
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,56 +28,66 @@ class CustomCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Stack(clipBehavior: Clip.none, children: [
-          Card(
-            elevation: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        product.title.substring(0, 7),
-                        style: const TextStyle(
-                          color: Colors.grey,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Card(
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          widget.product.title.substring(0, 7),
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:  [
-                      Text(
-                        r'$' '${product.price}',
-                        style: const TextStyle(
-                          color: Colors.black,
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          r'$' '${widget.product.price}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                      const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      ),
-                    ],
-                  ),
-                ],
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isFavorite = !isFavorite;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.favorite,
+                          ),
+                          color: isFavorite ? Colors.red : Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Positioned(
-            right: 40,
-            bottom: 75,
-            child: Image.network(
-              product.image,
-              height: 95,
-              width: 100,
+            Positioned(
+              right: 40,
+              bottom: 85,
+              child: Image.network(
+                widget.product.image,
+                height: 95,
+                width: 100,
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }
