@@ -1,7 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:store_app/cubit/store_cubit.dart';
 import 'package:store_app/models/all_product_model.dart';
+import 'package:store_app/screens/update_product_page.dart';
 
 class CustomCard extends StatefulWidget {
   const CustomCard({super.key, required this.product});
@@ -30,6 +30,7 @@ class _CustomCardState extends State<CustomCard> {
         ),
         child: Stack(
           clipBehavior: Clip.none,
+          alignment: Alignment.topRight,
           children: [
             Card(
               elevation: 2,
@@ -86,6 +87,28 @@ class _CustomCardState extends State<CustomCard> {
                 width: 100,
               ),
             ),
+            if (StoreCubit.get(context).isAdmin)
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpdateProductPage(
+                        productModel: widget.product,
+                      ),
+                    ),
+                  );
+                },
+                child: const CircleAvatar(
+                  backgroundColor: Colors.teal,
+                  foregroundColor: Colors.white,
+                  radius: 14,
+                  child: Icon(
+                    Icons.edit,
+                    size: 16,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

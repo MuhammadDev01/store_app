@@ -7,14 +7,14 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.suffixIcon,
     this.textInputType,
-    this.controller,
+    this.initialValue,
   });
 
   final String? hinttext;
   final Function(String)? onChanged;
   final Icon? suffixIcon;
   final TextInputType? textInputType;
-  final TextEditingController? controller;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,11 @@ class CustomTextField extends StatelessWidget {
       padding: const EdgeInsets.all(
         8.0,
       ),
-      child: TextField(
-        
-        controller: controller,
+      child: TextFormField(
+        initialValue: initialValue,
         keyboardType: textInputType,
         onChanged: onChanged,
         decoration: InputDecoration(
-          
           suffixIcon: suffixIcon,
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(
@@ -41,9 +39,6 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           hintText: hinttext,
-          hintStyle: const TextStyle(
-            color: Colors.black,
-          ),
         ),
       ),
     );

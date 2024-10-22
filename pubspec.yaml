@@ -11,9 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
-  font_awesome_flutter: ^10.4.0
   http: ^0.13.6
-  modal_progress_hud_nsn: ^0.4.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

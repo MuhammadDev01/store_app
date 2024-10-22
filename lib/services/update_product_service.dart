@@ -3,11 +3,9 @@ import 'package:store_app/models/all_product_model.dart';
 
 class UpdateProductService {
   Future<ProductModel> updateProductService({
-    required String title,
-    required String price,
-    required String desc,
-    required String image,
-    required String category,
+    String? title,
+    String? price,
+    String? desc,
     required int id,
   }) async {
     Map<String, dynamic> data = await Api().put(
@@ -16,9 +14,7 @@ class UpdateProductService {
         'title': title,
         'price': price,
         'description': desc,
-        'image': image,
-        'category': category,
-        'id':id,
+        'id': id,
       },
     );
     return ProductModel.fromjson(data);
