@@ -15,7 +15,8 @@ class UpdateProductPage extends StatefulWidget {
 }
 
 class _UpdateProductPageState extends State<UpdateProductPage> {
-  String? title, price, description;
+  String? title, description;
+  String? price;
 
   @override
   Widget build(BuildContext context) {
@@ -70,19 +71,21 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
                 ),
                 CustomTextField(
                   initialValue: widget.productModel.description,
-                  onChanged: (p0) => description = p0,
+                  onChanged: (p0) {
+                    return description = p0;
+                  },
                   hinttext: 'Product description',
                 ),
                 const SizedBox(
                   height: 30,
                 ),
                 CustomButton(
-                  ontap: () {
-                    StoreCubit.get(context).updateProduct(
+                  ontap: () async {
+                    await StoreCubit.get(context).updateProduct(
                       id: widget.productModel.id,
-                      title: title,
-                      price: price,
-                      desc: description,
+                      title: title ?? widget.productModel.title,
+                      price: price ?? widget.productModel.price,
+                      desc: description ?? widget.productModel.description,
                     );
                   },
                   child: state is UpdateProductLoadingState

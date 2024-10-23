@@ -82,7 +82,7 @@ class _CustomCardState extends State<CustomCard> {
               right: 40,
               bottom: 85,
               child: Image.network(
-                widget.product.image,
+                widget.product.image!,
                 height: 95,
                 width: 100,
               ),

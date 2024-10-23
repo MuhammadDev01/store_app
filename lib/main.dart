@@ -6,12 +6,21 @@ import 'package:store_app/cubit/store_cubit.dart';
 import 'package:store_app/screens/home_page.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
-      builder: (context) => const StoreApp(), // Wrap your app
+      builder: (context) => const StoreApp(),
     ),
   );
+}
+
+class MyBlocObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    debugPrint("$bloc $change");
+    super.onChange(bloc, change);
+  }
 }
 
 class StoreApp extends StatelessWidget {
@@ -20,7 +29,7 @@ class StoreApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => StoreCubit(),
+      create: (context) => StoreCubit()..getAllproducts(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         locale: DevicePreview.locale(context),

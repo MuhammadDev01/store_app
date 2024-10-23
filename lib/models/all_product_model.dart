@@ -1,19 +1,19 @@
 class ProductModel {
   final int id;
-  final String title;
-  final String price;
-  final String description;
-  final String category;
-  final String image;
-  final RatingModel rating;
+   String title;
+   String price;
+   String description;
+   String? category;
+   String? image;
+   RatingModel rating;
 
   ProductModel({
     required this.id,
     required this.title,
     required this.price,
     required this.description,
-    required this.category,
-    required this.image,
+    this.category,
+    this.image,
     required this.rating,
   });
   factory ProductModel.fromjson(jsonData) {

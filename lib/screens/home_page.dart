@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/cubit/store_cubit.dart';
-import 'package:store_app/models/all_product_model.dart';
 import 'package:store_app/screens/product_view_page.dart';
-import 'package:store_app/services/all_product_service.dart';
 import 'package:store_app/widgets/custom_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -51,13 +49,17 @@ class HomePage extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
-            child: FutureBuilder<List<ProductModel>>(
-              future: AllProudctService().getallproduct(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<ProductModel> products = snapshot.data!;
+            child: BlocBuilder<StoreCubit, StoreStates>(
+              builder: (context, state) {
+                if (state is GetAllProductsLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                    ),
+                  );
+                } else {
                   return GridView.builder(
-                    itemCount: products.length,
+                    itemCount: StoreCubit.get(context).products.length,
                     clipBehavior: Clip.none,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -69,28 +71,30 @@ class HomePage extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) => GestureDetector(
                       child: CustomCard(
-                        product: products[index],
+                        product: StoreCubit.get(context).products[index],
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductViewPage(
-                              productModel: products[index],
-                            ),
-                          ),
-                        );
+                        _goToProductViewPage(context, index);
                       },
                     ),
                   );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
                 }
               },
             ),
           ),
         );
       },
+    );
+  }
+
+  void _goToProductViewPage(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductViewPage(
+          productModel: StoreCubit.get(context).products[index],
+        ),
+      ),
     );
   }
 }

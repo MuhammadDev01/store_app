@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/services/update_product_service.dart';
+import 'package:store_app/models/all_product_model.dart';
+import 'package:store_app/services/all_product_service.dart';
 
 part 'store_state.dart';
 
@@ -16,23 +17,25 @@ class StoreCubit extends Cubit<StoreStates> {
     emit(ChangeAdminStoreState());
   }
 
+  List<ProductModel> products = [];
+  getAllproducts() async {
+    emit(GetAllProductsLoadingState());
+    products = await AllProudctService().getallproduct();
+    emit(GetAllProductsSuccessState());
+  }
+
   Future<void> updateProduct({
-    String? title,
-    String? price,
-    String? desc,
+    required String title,
+    required String price,
+    required String desc,
     required int id,
   }) async {
     emit(UpdateProductLoadingState());
-    try {
-      await UpdateProductService().updateProductService(
-        id: id,
-        title: title,
-        price: price,
-        desc: desc,
-      );
-      emit(UpdateProductSuccessState());
-    } catch (e) {
-      emit(UpdateProductFailureState());
-    }
+
+    products[id - 1].title = title;
+    products[id - 1].price = price;
+    products[id - 1].description = desc;
+
+    emit(UpdateProductSuccessState());
   }
 }

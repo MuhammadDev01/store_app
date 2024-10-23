@@ -12,3 +12,7 @@ class UpdateProductLoadingState extends StoreStates {}
 class UpdateProductSuccessState extends StoreStates {}
 
 class UpdateProductFailureState extends StoreStates {}
+
+class GetAllProductsLoadingState extends StoreStates {}
+class GetAllProductsSuccessState extends StoreStates {}
+class GetAllProductsFailureState extends StoreStates {}

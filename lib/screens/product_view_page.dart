@@ -33,7 +33,7 @@ class ProductViewPage extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Image.network(
-                  productModel.image,
+                  productModel.image!,
                   scale: 3.5,
                   
                 ),
