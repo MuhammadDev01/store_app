@@ -72,6 +72,7 @@ class HomePage extends StatelessWidget {
                     itemBuilder: (context, index) => GestureDetector(
                       child: CustomCard(
                         product: StoreCubit.get(context).products[index],
+                        index: index,
                       ),
                       onTap: () {
                         _goToProductViewPage(context, index);

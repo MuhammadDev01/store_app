@@ -10,6 +10,11 @@ class StoreCubit extends Cubit<StoreStates> {
 
   static StoreCubit get(context) => BlocProvider.of(context);
 
+  changeFavoriteProduct(int index) {
+    products[index].isFavorite = !products[index].isFavorite;
+    emit(ChangeFavoriteStoreState());
+  }
+
   bool isAdmin = false;
 
   updateAdmin() {
@@ -24,18 +29,22 @@ class StoreCubit extends Cubit<StoreStates> {
     emit(GetAllProductsSuccessState());
   }
 
-  Future<void> updateProduct({
+  updateProduct({
     required String title,
     required String price,
     required String desc,
     required int id,
-  }) async {
-    emit(UpdateProductLoadingState());
-
+  }) {
     products[id - 1].title = title;
     products[id - 1].price = price;
     products[id - 1].description = desc;
-
     emit(UpdateProductSuccessState());
+  }
+
+  removeProduct({
+    required int index,
+  }) {
+    products.removeAt(index);
+    emit(RemoveProductSuccessState());
   }
 }

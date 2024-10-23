@@ -30,14 +30,6 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
             ),
           );
         }
-        if (state is UpdateProductFailureState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Fail'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
       },
       builder: (context, state) {
         return Scaffold(
@@ -88,18 +80,14 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
                       desc: description ?? widget.productModel.description,
                     );
                   },
-                  child: state is UpdateProductLoadingState
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
-                        )
-                      : const Text(
-                          'Update',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                  child: const Text(
+                    'Update',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -1,14 +1,16 @@
 class ProductModel {
   final int id;
-   String title;
-   String price;
-   String description;
-   String? category;
-   String? image;
-   RatingModel rating;
+  String title;
+  String price;
+  String description;
+  String? category;
+  String? image;
+  bool isFavorite;
+  RatingModel rating;
 
   ProductModel({
     required this.id,
+    this.isFavorite = false,
     required this.title,
     required this.price,
     required this.description,
