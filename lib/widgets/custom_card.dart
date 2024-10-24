@@ -37,7 +37,9 @@ class CustomCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          product.title.substring(0, 7),
+                          product.title.length < 8
+                              ? product.title
+                              : product.title.substring(0, 10),
                           style: const TextStyle(
                             color: Colors.grey,
                           ),
@@ -64,9 +66,10 @@ class CustomCard extends StatelessWidget {
                           icon: const Icon(
                             Icons.favorite,
                           ),
-                          color: product.isFavorite // تحقق من حالة المنتج المحددة
-                              ? Colors.red
-                              : Colors.blue,
+                          color:
+                              product.isFavorite // تحقق من حالة المنتج المحددة
+                                  ? Colors.red
+                                  : Colors.blue,
                         ),
                       ],
                     ),

@@ -14,13 +14,14 @@ class ProductViewPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
+        height: double.infinity,
         padding: const EdgeInsets.all(12),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.topRight,
             colors: [
-              Colors.white,
+              Colors.black,
               Colors.blue,
             ],
           ),
@@ -28,14 +29,13 @@ class ProductViewPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Align(
                 alignment: Alignment.center,
                 child: Image.network(
                   productModel.image!,
-                  scale: 3.5,
-                  
+                  height: 150,
                 ),
               ),
               const SizedBox(

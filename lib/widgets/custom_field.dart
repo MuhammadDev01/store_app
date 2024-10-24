@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.textInputType,
     this.initialValue,
+    this.validator,
   });
 
   final String? hinttext;
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final Icon? suffixIcon;
   final TextInputType? textInputType;
   final String? initialValue;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class CustomTextField extends StatelessWidget {
         8.0,
       ),
       child: TextFormField(
+        validator: validator,
         initialValue: initialValue,
         keyboardType: textInputType,
         onChanged: onChanged,

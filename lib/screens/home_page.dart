@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/cubit/store_cubit.dart';
+import 'package:store_app/models/all_product_model.dart';
 import 'package:store_app/screens/product_view_page.dart';
+import 'package:store_app/widgets/custom_button.dart';
 import 'package:store_app/widgets/custom_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,12 +12,62 @@ class HomePage extends StatelessWidget {
   static String id = 'HomePage';
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StoreCubit, StoreStates>(
+    TextEditingController nameController = TextEditingController();
+    GlobalKey<FormState> formKey = GlobalKey();
+    TextEditingController priceController = TextEditingController();
+    TextEditingController imageController = TextEditingController();
+    TextEditingController descController = TextEditingController();
+    TextEditingController ratingController = TextEditingController();
+    return BlocConsumer<StoreCubit, StoreStates>(
+      listener: (context, state) {
+        if (state is AddProductSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Product added successfully'),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.white,
           appBar: AppBar(
             actions: [
+              if (StoreCubit.get(context).isAdmin)
+                IconButton(
+                  icon: const Icon(Icons.add_circle_outline),
+                  tooltip: 'add a product',
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text(
+                          'Add a product',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        content: Form(
+                          key: formKey,
+                          child: SingleChildScrollView(
+                            child: _addProductFields(
+                              nameController,
+                              priceController,
+                              descController,
+                              ratingController,
+                              imageController,
+                              formKey,
+                              context,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               Switch(
                 value: StoreCubit.get(context).isAdmin,
                 activeColor: Colors.teal,
@@ -85,6 +137,136 @@ class HomePage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Column _addProductFields(
+      TextEditingController nameController,
+      TextEditingController priceController,
+      TextEditingController descController,
+      TextEditingController ratingController,
+      TextEditingController imageController,
+      GlobalKey<FormState> formKey,
+      BuildContext context) {
+    return Column(
+      children: [
+        TextFormField(
+          controller: nameController,
+          keyboardType: TextInputType.text,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Required';
+            }
+            return null;
+          },
+          decoration: const InputDecoration(
+            labelText: 'Product Name',
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextFormField(
+          controller: priceController,
+          keyboardType: TextInputType.number,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Required';
+            }
+            return null;
+          },
+          decoration: const InputDecoration(
+            labelText: 'Product Price',
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextFormField(
+          controller: descController,
+          keyboardType: TextInputType.text,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Required';
+            }
+            return null;
+          },
+          decoration: const InputDecoration(
+            labelText: 'Product description',
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextFormField(
+          controller: ratingController,
+          keyboardType: TextInputType.number,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Required';
+            }
+            return null;
+          },
+          decoration: const InputDecoration(
+            labelText: 'Product rating',
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextFormField(
+          controller: imageController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Required';
+            }
+            return null;
+          },
+          decoration: const InputDecoration(
+            labelText: 'Product image',
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        CustomButton(
+          child: const Text(
+            'Add',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          ontap: () {
+            if (formKey.currentState!.validate()) {
+              StoreCubit.get(context).addProduct(
+                product: ProductModel(
+                  id: StoreCubit.get(context).products.length + 1,
+                  title: nameController.text,
+                  price: priceController.text,
+                  description: descController.text,
+                  rating: RatingModel(
+                    rate: ratingController.text,
+                    count: '5',
+                  ),
+                  image: imageController.text,
+                ),
+              );
+              Navigator.pop(context);
+            }
+          },
+        ),
+      ],
     );
   }
 

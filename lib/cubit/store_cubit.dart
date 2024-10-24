@@ -16,7 +16,6 @@ class StoreCubit extends Cubit<StoreStates> {
   }
 
   bool isAdmin = false;
-
   updateAdmin() {
     isAdmin = !isAdmin;
     emit(ChangeAdminStoreState());
@@ -27,6 +26,14 @@ class StoreCubit extends Cubit<StoreStates> {
     emit(GetAllProductsLoadingState());
     products = await AllProudctService().getallproduct();
     emit(GetAllProductsSuccessState());
+  }
+
+  GlobalKey<FormState> formKey = GlobalKey();
+  addProduct({
+    required ProductModel product,
+  }) {
+    products.add(product);
+    emit(AddProductSuccessState());
   }
 
   updateProduct({
