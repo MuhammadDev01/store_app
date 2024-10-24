@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-**Store App** is a responsive e-commerce application developed using **Flutter** and the **Cubit** state management solution. The app is based on a project from **Tharwat Samy**'s Flutter course on Udemy. It connects to the [FakeStore API](https://fakestoreapi.com/) to display a range of products and allows users to switch between **Admin** and **User** modes for added functionality.
+**Store App** is a responsive e-commerce application developed using **Flutter** and the **Cubit** state management solution. The app is based on a project from **Tharwat Samy**'s Flutter course on [Udemy](https://www.udemy.com/course/best-and-complete-flutter-course-for-beginners). It connects to the [FakeStore API](https://fakestoreapi.com/) to display a range of products and allows users to switch between **Admin** and **User** modes for added functionality.
 
 ## ✨ Features
 
